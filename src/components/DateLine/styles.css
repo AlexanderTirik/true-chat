@@ -1,0 +1,9 @@
+.dateLine {
+  text-align: center;
+  background-color: var(--block-backround);
+  margin: 2px auto;
+  padding: 5px;
+  border-radius: 20px;
+  /* border: 2px solid var(--border-color); */
+  box-shadow: 0 0 4px 2px var(--shadow-color);
+}

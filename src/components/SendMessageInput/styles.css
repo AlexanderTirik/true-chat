@@ -1,0 +1,30 @@
+.sendMessageInput {
+  display: flex;
+  flex-direction: row;
+  justify-content: ;
+  height: 40px;
+  padding: 10px;
+}
+.sendMessageForm {
+  width: 80%;
+  height: 100%;
+  margin: 0 10px;
+}
+.sendMessageTextArea {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    border:2px solid var(--border-color)
+  }
+  .sendMessageButton {
+    height: 45px;
+    width: 100px;
+    border-radius: 15px;
+    border:1px solid var(--border-color);
+    background-color: var(--chat-background);
+  }
+  .sendMessageButton:hover {
+    border:2px solid var(--border-color);
+    background-color: var(--block-background);
+    transition: 0.1s;
+  }

@@ -1,0 +1,19 @@
+.messageList {
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  overflow-y: scroll;
+  background-color: var(--chat-background);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--chat-background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 10px;
+  margin-left: 4px;
+}

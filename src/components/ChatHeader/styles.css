@@ -1,0 +1,14 @@
+.chatHeader {
+  margin: 10px;
+  display: flex;
+  flex-direction: row;
+  background-color: var(--block-backround);
+}
+.header{
+  margin: 4px 10px;
+  padding-bottom: 2px;
+  border-bottom: 2px dashed var(--border-color);
+}
+#lastMessage{
+  margin-left: auto;
+}
