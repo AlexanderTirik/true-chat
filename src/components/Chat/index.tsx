@@ -22,7 +22,7 @@ class Chat extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
-      chatName: "Telegram",
+      chatName: "GreenChat",
       isLoading: true,
     };
     this.addLike = this.addLike.bind(this);
