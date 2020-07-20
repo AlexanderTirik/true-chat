@@ -1,13 +1,23 @@
 import React from "react";
 import "./styles.css";
-import PropTypes from "prop-types";
+import { addMessage } from "../../actions/chatActions";
+import {
+  setCurrentMessageId,
+  showModal,
+} from "../../actions/outgoingMessageActions";
+import { connect } from "react-redux";
+import IMessage from "../../types/messageType";
+import ChatService from "../../services/chatService";
 
 interface IState {
   typeMessage: string;
 }
 
 interface IProps {
+  messages: IMessage[];
   addMessage: Function;
+  setCurrentMessageId: Function;
+  showModal: Function;
 }
 
 class SendMessageInput extends React.Component<IProps, IState> {
@@ -17,11 +27,30 @@ class SendMessageInput extends React.Component<IProps, IState> {
       typeMessage: "",
     };
     this.handleTyping = this.handleTyping.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
-  static propTypes = {
-    addMessage: PropTypes.func,
-  };
+  onSend() {
+    const message: IMessage = {
+      idMessage: ChatService.getIdMessage(),
+      id: "0",
+      text: this.state.typeMessage,
+      user: "You",
+      createdAt: new Date(),
+      formattedTime: ChatService.formatTime(new Date()),
+      likes: 0,
+    };
+    this.props.addMessage(message);
+  }
+  handleKeyDown(event: React.KeyboardEvent) {
+    if (event.keyCode === 38) {
+      const lastMessage = this.props.messages[this.props.messages.length - 1];
+      if (lastMessage.id === "0") {
+        this.props.setCurrentMessageId(lastMessage.idMessage);
+        this.props.showModal();
+      }
+    }
+  }
 
   handleTyping(event: React.FormEvent<HTMLInputElement>) {
     this.setState({ typeMessage: event.currentTarget.value });
@@ -36,12 +65,10 @@ class SendMessageInput extends React.Component<IProps, IState> {
             className="sendMessageTextArea"
             value={this.state.typeMessage}
             onChange={this.handleTyping}
+            onKeyDown={this.handleKeyDown}
           />
         </form>
-        <button
-          className="sendMessageButton"
-          onClick={() => this.props.addMessage(this.state.typeMessage)}
-        >
+        <button className="sendMessageButton" onClick={() => this.onSend()}>
           Send
         </button>
       </div>
@@ -49,4 +76,22 @@ class SendMessageInput extends React.Component<IProps, IState> {
   }
 }
 
-export default SendMessageInput;
+interface IStoreState {
+  chat: {
+    messages?: IMessage[];
+  };
+}
+
+const mapStateToProps = (state: IStoreState) => {
+  return {
+    messages: state.chat.messages!,
+  };
+};
+
+const mapDispatchToProps = {
+  addMessage,
+  showModal,
+  setCurrentMessageId,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SendMessageInput);

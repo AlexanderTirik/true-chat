@@ -6,25 +6,17 @@ import { month } from "../../types/monthType";
 import IncomingMessage from "../IncomingMessage";
 import OutgoingMessage from "../OutgoingMessage";
 import DateLine from "../DateLine";
-import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import EditModal from "../EditModal";
 
 interface IState {}
 
 interface IProps {
   messages: IMessage[];
-  addLike: Function;
-  editMessage: Function;
-  deleteMessage: Function;
+  isShownEditPage: boolean;
 }
 
 class MessageList extends React.Component<IProps, IState> {
-  static propTypes = {
-    messages: PropTypes.array,
-    addLike: PropTypes.func,
-    editMessage: PropTypes.func,
-    deleteMessage: PropTypes.func,
-  };
-
   getFormatDate(dateStr: string | Date) {
     const date = new Date(dateStr);
     if (this.isToday(date)) return "Today";
@@ -74,32 +66,43 @@ class MessageList extends React.Component<IProps, IState> {
     return result;
   }
 
-  getMessageComponent(message: IMessage, numberMessage: number) {
+  getMessageComponent(message: IMessage, index: number) {
     if (message.id === "0") {
       return (
         <OutgoingMessage
           message={message}
-          numberMessage={numberMessage}
-          editMessage={this.props.editMessage}
-          deleteMessage={this.props.deleteMessage}
-          key={numberMessage}
+          key={message.idMessage + Math.random()}
         />
       );
     } else {
       return (
         <IncomingMessage
           message={message}
-          numberMessage={numberMessage}
-          addLike={this.props.addLike}
-          key={numberMessage}
+          key={message.idMessage + Math.random()}
         />
       );
     }
   }
 
   render() {
-    return <div className="messageList">{this.generateMessageLine()}</div>;
+    return (
+      <div className="messageList">
+        {this.generateMessageLine()}
+        {this.props.isShownEditPage ? <EditModal key={"modalWindow" + Math.random()}/> : null}
+      </div>
+    );
   }
 }
 
-export default MessageList;
+interface IStoreState {
+  outgoingMessage: {
+    isShownEditPage: boolean;
+  };
+}
+
+const mapStateToProps = (state: IStoreState) => {
+  return {
+    isShownEditPage: state.outgoingMessage.isShownEditPage,
+  };
+};
+export default connect(mapStateToProps)(MessageList);

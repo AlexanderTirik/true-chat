@@ -1,5 +1,5 @@
 .incomingMessage {
-  background-color: var(--block-backround);
+  background-color: var(--block-background);
   display: flex;
   width: 60%;
   word-wrap:break-word;

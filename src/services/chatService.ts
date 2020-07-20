@@ -9,6 +9,8 @@ class ChatService {
       const response = await makeRequest(Method.GET, apiUrl);
       const msg: IMessage[] = await response.json();
       const messages: IMessage[] = msg.map((message) => {
+        message.likes = 0;
+        message.idMessage = this.getIdMessage();
         message.formattedTime = this.formatTime(message.createdAt);
         return message;
       });
@@ -20,11 +22,9 @@ class ChatService {
     }
   }
   async loadChatData() {
-    this.getMessages();
     const messages = await this.getMessages();
     const participants = this.countParticipants(messages) + 1;
-    const messagesNumber = messages.length;
-    return { messages, participants, messagesNumber };
+    return { messages, participants };
   }
   formatTime(date: string | Date) {
     const newDate = new Date(date);
@@ -45,6 +45,12 @@ class ChatService {
     if (new Date(a.createdAt) > new Date(b.createdAt)) return 1;
     if (new Date(a.createdAt) < new Date(b.createdAt)) return -1;
     return 0;
+  }
+  getIdMessage() {
+    return (
+      Math.random().toString(36).substring(2, 15) +
+      Math.random().toString(36).substring(2, 15) 
+    );
   }
 }
 

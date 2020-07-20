@@ -1,28 +1,19 @@
 import React from "react";
 import "./styles.css";
 import IMessage from "../../types/messageType";
-import PropTypes from "prop-types";
+import { changeLike } from "../../actions/chatActions";
+import { connect } from "react-redux";
 
 interface IProps {
   message: IMessage;
-  numberMessage: number;
-  addLike: Function;
+  changeLike: Function;
 }
-interface IState {}
 
-class IncomingMessage extends React.Component<IProps, IState> {
-  constructor(props: IProps) {
-    super(props);
-    this.state = {
-      likes: 0,
-    };
+class IncomingMessage extends React.Component<IProps> {
+
+  onLike() {
+    this.props.changeLike(this.props.message.idMessage);
   }
-
-  static propTypes = {
-    message: PropTypes.object,
-    numberMessage: PropTypes.number,
-    addLike: PropTypes.func,
-  };
 
   render() {
     const likes = this.props.message.likes;
@@ -43,10 +34,7 @@ class IncomingMessage extends React.Component<IProps, IState> {
           <div className="info">
             <div className="likeBlock">
               <span className="like">{likes ? likes : null}</span>
-              <button
-                className="likeButton"
-                onClick={() => this.props.addLike(this.props.numberMessage)}
-              >
+              <button className="likeButton" onClick={() => this.onLike()}>
                 {likes ? "❤️" : "💛"}
               </button>
             </div>
@@ -57,4 +45,9 @@ class IncomingMessage extends React.Component<IProps, IState> {
     );
   }
 }
-export default IncomingMessage;
+
+const mapDispatchToProps = {
+  changeLike,
+};
+
+export default connect(null, mapDispatchToProps)(IncomingMessage);
