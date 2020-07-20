@@ -67,18 +67,18 @@ class MessageList extends React.Component<IProps, IState> {
   }
 
   getMessageComponent(message: IMessage, index: number) {
-    if (message.id === "0") {
+    if (message.userId === "0") {
       return (
         <OutgoingMessage
           message={message}
-          key={message.idMessage + Math.random()}
+          key={message.id + Math.random()}
         />
       );
     } else {
       return (
         <IncomingMessage
           message={message}
-          key={message.idMessage + Math.random()}
+          key={message.id + Math.random()}
         />
       );
     }

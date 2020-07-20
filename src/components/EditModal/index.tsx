@@ -30,7 +30,7 @@ class EditModal extends React.Component<IProps, IState> {
   componentDidMount() {
     const messageId = this.props.currentMessageId;
     const currMessage = this.props.messages!.find(
-      (message) => message.idMessage === messageId
+      (message) => message.id === messageId
     );
     this.setState({ textArea: currMessage!.text });
   }

@@ -12,7 +12,7 @@ interface IProps {
 class IncomingMessage extends React.Component<IProps> {
 
   onLike() {
-    this.props.changeLike(this.props.message.idMessage);
+    this.props.changeLike(this.props.message.id);
   }
 
   render() {

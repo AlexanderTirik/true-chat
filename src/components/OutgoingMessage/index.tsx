@@ -29,7 +29,7 @@ class OutgoingMessage extends React.Component<IProps, IState> {
   }
 
   handleDelete() {
-    this.props.deleteMessage(this.props.message.idMessage);
+    this.props.deleteMessage(this.props.message.id);
   }
 
   handleSure() {
@@ -37,7 +37,7 @@ class OutgoingMessage extends React.Component<IProps, IState> {
   }
 
   handleStartEditing() {
-    this.props.setCurrentMessageId(this.props.message.idMessage);
+    this.props.setCurrentMessageId(this.props.message.id);
     this.props.showModal();
   }
   

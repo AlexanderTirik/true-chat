@@ -1,6 +1,6 @@
 export default interface IMessage {
-  idMessage:string;
   id: string;
+  userId:string;
   text: string;
   user: string;
   avatar?: string;

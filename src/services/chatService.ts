@@ -1,16 +1,17 @@
 import makeRequest from "../helpers/makeRequest";
 import { Method } from "../types/requestMethodType";
 import IMessage from "../types/messageType";
+import mockMessages from "../mockData";
 
 class ChatService {
   async getMessages() {
     try {
-      const apiUrl = "https://api.npoint.io/a139a0497ad54efd301f";
+      const apiUrl = "https://api.npoint.io/b919cb46edac4c74d0a8";
       const response = await makeRequest(Method.GET, apiUrl);
-      const msg: IMessage[] = await response.json();
-      const messages: IMessage[] = msg.map((message) => {
+      let msg = await response.json();
+      if (msg == null) msg = mockMessages;
+      const messages: IMessage[] = msg.map((message: any) => {
         message.likes = 0;
-        message.idMessage = this.getIdMessage();
         message.formattedTime = this.formatTime(message.createdAt);
         return message;
       });
@@ -36,7 +37,7 @@ class ChatService {
   countParticipants(messages: IMessage[]) {
     const participants = new Set();
     messages.forEach((message: IMessage) => {
-      participants.add(message.id);
+      participants.add(message.userId);
     });
     return participants.size;
   }
@@ -49,7 +50,7 @@ class ChatService {
   getIdMessage() {
     return (
       Math.random().toString(36).substring(2, 15) +
-      Math.random().toString(36).substring(2, 15) 
+      Math.random().toString(36).substring(2, 15)
     );
   }
 }

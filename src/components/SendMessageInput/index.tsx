@@ -32,8 +32,8 @@ class SendMessageInput extends React.Component<IProps, IState> {
 
   onSend() {
     const message: IMessage = {
-      idMessage: ChatService.getIdMessage(),
-      id: "0",
+      id: ChatService.getIdMessage(),
+      userId: "0",
       text: this.state.typeMessage,
       user: "You",
       createdAt: new Date(),
@@ -45,8 +45,8 @@ class SendMessageInput extends React.Component<IProps, IState> {
   handleKeyDown(event: React.KeyboardEvent) {
     if (event.keyCode === 38) {
       const lastMessage = this.props.messages[this.props.messages.length - 1];
-      if (lastMessage.id === "0") {
-        this.props.setCurrentMessageId(lastMessage.idMessage);
+      if (lastMessage.userId === "0") {
+        this.props.setCurrentMessageId(lastMessage.id);
         this.props.showModal();
       }
     }

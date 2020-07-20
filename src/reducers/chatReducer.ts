@@ -38,7 +38,7 @@ export default function (state = initialState, action: IAction) {
     case ChatActions.EDIT_MESSAGE: {
       const { idMessage, data } = action.payload!;
       const updatedMessages = state.messages!.map((message) => {
-        if (message.idMessage === idMessage) {
+        if (message.id === idMessage) {
           return {
             ...message,
             ...data,
@@ -52,14 +52,14 @@ export default function (state = initialState, action: IAction) {
     case ChatActions.DELETE_MESSAGE: {
       const { idMessage } = action.payload!;
       const filteredMessages = state.messages!.filter(
-        (message) => message.idMessage !== idMessage
+        (message) => message.id !== idMessage
       );
       return { ...state, messages: filteredMessages };
     }
     case ChatActions.CHANGE_LIKE: {
       const { idMessage } = action.payload!;
       const messages = [...state.messages!];
-      let message = messages.find((message) => message.idMessage == idMessage);
+      let message = messages.find((message) => message.id == idMessage);
       message!.likes = Math.abs(message!.likes - 1);
       return { ...state, messages };
     }
