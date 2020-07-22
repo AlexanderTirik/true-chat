@@ -1,0 +1,7 @@
+export enum PageActions {
+  HIDE_LOADING = "HIDE_LOADING",
+  SHOW_LOADING = "SHOW_LOADING",
+  LOGIN = "LOGIN",
+  LOGOUT = "LOGOUT",
+  SET_CURRENT_ID = "SET_CURRENT_ID",
+}
