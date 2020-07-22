@@ -66,6 +66,7 @@ class UserService extends Service {
         accessToken,
         data: {
           id: user.id,
+          role: user.role,
         },
       };
     } else {

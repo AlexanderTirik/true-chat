@@ -1,0 +1,38 @@
+.errorModal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(128, 128, 128, 0.6);
+  }
+  
+  .modalRoot {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background-color: white;
+    border-radius: 5px;
+    width: 200px;
+    background-color: var(--chat-background);
+  }
+  
+  .modalHeader {
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .closeModalButton {
+    background: none;
+    border: none;
+    margin-left: auto;
+    cursor: pointer;
+  }
+  .modalBody {
+    margin: 10px;
+  }
+  

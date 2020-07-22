@@ -7,16 +7,35 @@ import { connect } from "react-redux";
 interface IProps {
   message: IMessage;
   changeLike: Function;
+  userId: string;
 }
 
-class IncomingMessage extends React.Component<IProps> {
-
+interface IState {
+  isLiked: boolean;
+}
+class IncomingMessage extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
+    this.state = {
+      isLiked: false,
+    };
+  }
+  componentDidMount() {
+    this.props.message.likesId.every((id) => {
+      if (id == this.props.userId) {
+        this.setState({ isLiked: true });
+        return false;
+      }
+      return true;
+    });
+  }
   onLike() {
-    this.props.changeLike(this.props.message.id);
+    const likesId = this.props.message.likesId;
+    this.props.changeLike(this.props.message.id, this.props.userId, likesId);
   }
 
   render() {
-    const likes = this.props.message.likes;
+    const likes = this.props.message.likesId.length;
     return (
       <div className="incomingMessage">
         <div className="avatarBlock">
@@ -35,7 +54,7 @@ class IncomingMessage extends React.Component<IProps> {
             <div className="likeBlock">
               <span className="like">{likes ? likes : null}</span>
               <button className="likeButton" onClick={() => this.onLike()}>
-                {likes ? "❤️" : "💛"}
+                {this.state.isLiked ? "❤️" : "💛"}
               </button>
             </div>
             <div className="date">{this.props.message.formattedTime}</div>
@@ -46,8 +65,20 @@ class IncomingMessage extends React.Component<IProps> {
   }
 }
 
+interface IStoreState {
+  page: {
+    userId: string;
+  };
+}
+
+const mapStateToProps = (state: IStoreState) => {
+  return {
+    userId: state.page.userId,
+  };
+};
+
 const mapDispatchToProps = {
   changeLike,
 };
 
-export default connect(null, mapDispatchToProps)(IncomingMessage);
+export default connect(mapStateToProps, mapDispatchToProps)(IncomingMessage);

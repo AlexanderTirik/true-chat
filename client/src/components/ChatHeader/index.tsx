@@ -8,7 +8,7 @@ interface IProps {
   participants: number;
   messagesNumber: number;
   chatName: string;
-  lastMessage: string;
+  lastMessage: string | undefined;
 }
 
 class ChatHeader extends React.Component<IProps, IState> {
@@ -31,10 +31,12 @@ class ChatHeader extends React.Component<IProps, IState> {
         <span className="header">
           <b>Messages Number:</b> {this.props.messagesNumber}
         </span>
-        <span className="header" id="lastMessage">
-          <b>Last message at </b>
-          {this.props.lastMessage}
-        </span>
+        {this.props.lastMessage ? (
+          <span className="header" id="lastMessage">
+            <b>Last message at </b>
+            {this.props.lastMessage}
+          </span>
+        ) : null}
       </div>
     );
   }

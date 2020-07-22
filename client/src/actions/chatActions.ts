@@ -1,26 +1,29 @@
 import { ChatActions } from "../types/chatActionsTypes";
 import IMessage from "../types/messageType";
 
-export const initStorage = (messages: IMessage[], participants:number) => ({
-  type: ChatActions.INIT_STORAGE,
+export const setStorage = (messages: IMessage[], participants: number) => ({
+  type: ChatActions.SET_STORAGE,
   payload: {
     messages,
     participants,
   },
 });
+export const initStorage = () => ({
+  type: ChatActions.INIT_STORAGE,
+});
 
-export const addMessage = (data: IMessage) => ({
+export const addMessage = (data: { userId: string; text: string }) => ({
   type: ChatActions.ADD_MESSAGE,
   payload: {
     data,
   },
 });
 
-export const editMessage = (idMessage: string, data: IMessage) => ({
+export const editMessage = (idMessage: string, text: string) => ({
   type: ChatActions.EDIT_MESSAGE,
   payload: {
     idMessage,
-    data,
+    text,
   },
 });
 
@@ -31,11 +34,15 @@ export const deleteMessage = (idMessage: string) => ({
   },
 });
 
-export const changeLike = (idMessage: string) => ({
+export const changeLike = (
+  idMessage: string,
+  userId: string,
+  likesId: string[]
+) => ({
   type: ChatActions.CHANGE_LIKE,
   payload: {
     idMessage,
+    userId,
+    likesId,
   },
 });
-
-

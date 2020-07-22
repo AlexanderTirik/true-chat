@@ -22,6 +22,7 @@
   background: var(--block-backround);
   border: none;
   margin: 3px;
+  color: var(--font-color);
 }
 .sureButton {
   font-weight: 600;
@@ -30,6 +31,7 @@
 .editButton:hover,
 .deleteButton:hover,
 .sureButton:hover {
+  color: var(--font-color);
   background: var(--chat-background);
   transition: 0.2s;
   box-shadow: 0 0 4px 2px var(--shadow-color);
@@ -70,4 +72,8 @@
 }
 .editForm{
   width: 60%;
+}
+.Link {
+  color: var(--font-color);
+  text-decoration: none;
 }

@@ -1,12 +1,12 @@
 import { combineReducers } from "redux";
 import chat from "./chatReducer";
-import outgoingMessage from "./outgoingMessageReducer";
 import page from "./pageReducer";
+import error from "./errorReducer"
 
 const rootReducer = combineReducers({
   chat,
-  outgoingMessage,
   page,
+  error,
 });
 
 export default rootReducer;

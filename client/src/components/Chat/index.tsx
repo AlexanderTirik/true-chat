@@ -1,6 +1,5 @@
 import React from "react";
 import "./styles.css";
-import ChatService from "../../services/chatService";
 import IMessage from "../../types/messageType";
 import Spinner from "../Spinner";
 import ChatHeader from "../ChatHeader";
@@ -23,23 +22,23 @@ interface IProps {
 
 class Chat extends React.Component<IProps> {
   componentDidMount() {
-    ChatService.loadChatData().then(({ messages, participants }) => {
-      this.props.initStorage(messages, participants);
-      this.props.hideLoading();
-    });
+    this.props.initStorage();
   }
 
   render() {
     if (this.props.isLoading) return <Spinner />;
-    const lastMessage = this.props.messages![this.props.messages!.length - 1]
-      .formattedTime;
+    let lastMessage: string | undefined = "";
+    if (this.props.messages!.length > 0) {
+      lastMessage = this.props.messages![this.props.messages!.length - 1]
+        .formattedTime;
+    }
     return (
       <div className="chat">
         <ChatHeader
           chatName={this.props.chatName}
           participants={this.props.participants!}
           messagesNumber={this.props.messages!.length}
-          lastMessage={lastMessage!}
+          lastMessage={lastMessage}
         />
         <MessageList messages={this.props.messages!} />
         <SendMessageInput />

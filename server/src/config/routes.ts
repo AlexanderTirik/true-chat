@@ -22,8 +22,8 @@ export default (server: Express) => {
     MessageController.delete
   );
 
-  server.get(`/api/users`, authentificateAdminToken, UserController.getAll);
-  server.get(`/api/users/:id`, authentificateAdminToken, UserController.getOne);
+  server.get(`/api/users`, authentificateToken, UserController.getAll);
+  server.get(`/api/users/:id`, authentificateToken, UserController.getOne);
   server.post(`/api/users`, authentificateAdminToken, UserController.insert);
   server.put(`/api/users/:id`, authentificateAdminToken, UserController.update);
   server.delete(

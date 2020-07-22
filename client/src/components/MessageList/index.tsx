@@ -7,13 +7,13 @@ import IncomingMessage from "../IncomingMessage";
 import OutgoingMessage from "../OutgoingMessage";
 import DateLine from "../DateLine";
 import { connect } from "react-redux";
-import EditModal from "../EditModal";
+import {animateScroll } from "react-scroll";
 
 interface IState {}
 
 interface IProps {
   messages: IMessage[];
-  isShownEditPage: boolean;
+  userId: string;
 }
 
 class MessageList extends React.Component<IProps, IState> {
@@ -67,28 +67,25 @@ class MessageList extends React.Component<IProps, IState> {
   }
 
   getMessageComponent(message: IMessage, index: number) {
-    if (message.userId === "0") {
+    if (message.userId === this.props.userId) {
       return (
-        <OutgoingMessage
-          message={message}
-          key={message.id + Math.random()}
-        />
+        <OutgoingMessage message={message} key={message.id + Math.random()} />
       );
     } else {
       return (
-        <IncomingMessage
-          message={message}
-          key={message.id + Math.random()}
-        />
+        <IncomingMessage message={message} key={message.id + Math.random()} />
       );
     }
   }
 
+  componentDidMount(){
+    animateScroll.scrollToBottom({containerId:"messageList", duration:0})
+  }
+
   render() {
     return (
-      <div className="messageList">
-        {this.generateMessageLine()}
-        {this.props.isShownEditPage ? <EditModal key={"modalWindow" + Math.random()}/> : null}
+      <div className="messageList" id="messageList">
+        {this.props.messages.length > 0 ? this.generateMessageLine() : null}
       </div>
     );
   }
@@ -98,11 +95,14 @@ interface IStoreState {
   outgoingMessage: {
     isShownEditPage: boolean;
   };
+  page: {
+    userId: string;
+  };
 }
 
 const mapStateToProps = (state: IStoreState) => {
   return {
-    isShownEditPage: state.outgoingMessage.isShownEditPage,
+    userId: state.page.userId,
   };
 };
 export default connect(mapStateToProps)(MessageList);

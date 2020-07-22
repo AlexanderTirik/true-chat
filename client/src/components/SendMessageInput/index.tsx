@@ -1,10 +1,6 @@
 import React from "react";
 import "./styles.css";
 import { addMessage } from "../../actions/chatActions";
-import {
-  setCurrentMessageId,
-  showModal,
-} from "../../actions/outgoingMessageActions";
 import { connect } from "react-redux";
 import IMessage from "../../types/messageType";
 import ChatService from "../../services/chatService";
@@ -16,8 +12,7 @@ interface IState {
 interface IProps {
   messages: IMessage[];
   addMessage: Function;
-  setCurrentMessageId: Function;
-  showModal: Function;
+  userId: string;
 }
 
 class SendMessageInput extends React.Component<IProps, IState> {
@@ -31,23 +26,22 @@ class SendMessageInput extends React.Component<IProps, IState> {
   }
 
   onSend() {
-    const message: IMessage = {
-      id: ChatService.getIdMessage(),
-      userId: "0",
+    // const response = ChatService.sendMessage(
+    //   this.state.typeMessage,
+    //   this.props.userId
+    // );
+    
+    this.props.addMessage({
       text: this.state.typeMessage,
-      user: "You",
-      createdAt: new Date(),
-      formattedTime: ChatService.formatTime(new Date()),
-      likes: 0,
-    };
-    this.props.addMessage(message);
+      userId: this.props.userId,
+    });
   }
   handleKeyDown(event: React.KeyboardEvent) {
     if (event.keyCode === 38) {
       const lastMessage = this.props.messages[this.props.messages.length - 1];
       if (lastMessage.userId === "0") {
-        this.props.setCurrentMessageId(lastMessage.id);
-        this.props.showModal();
+        // this.props.setCurrentMessageId(lastMessage.id);
+        // this.props.showModal();
       }
     }
   }
@@ -80,18 +74,20 @@ interface IStoreState {
   chat: {
     messages?: IMessage[];
   };
+  page: {
+    userId: string;
+  };
 }
 
 const mapStateToProps = (state: IStoreState) => {
   return {
     messages: state.chat.messages!,
+    userId: state.page.userId,
   };
 };
 
 const mapDispatchToProps = {
   addMessage,
-  showModal,
-  setCurrentMessageId,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SendMessageInput);

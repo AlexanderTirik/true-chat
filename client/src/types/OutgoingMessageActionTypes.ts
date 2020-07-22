@@ -1,6 +1,0 @@
-export enum OutgoingMessageActions {
-  SHOW_MODAL = "SHOW_MODAL",
-  HIDE_MODAL = "HIDE_MODAL",
-  SET_EDITED = "SET_EDITED",
-  SET_CURRENT_MESSAGE_ID = "SET_CURRENT_MESSAGE_ID",
-}

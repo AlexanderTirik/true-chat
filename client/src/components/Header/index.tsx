@@ -2,6 +2,7 @@ import React from "react";
 import "./styles.css";
 import { connect } from "react-redux";
 import { logout } from "../../actions/pageActions";
+import {Link} from "react-router-dom"
 
 interface IState {}
 
@@ -20,7 +21,7 @@ function Header({ isLogged, logout }: IProps) {
       <span className="pageHeaderName"> green react chat</span>
       {isLogged ? (
         <button className="pageHeaderLogout" onClick={onLogout}>
-          Logout
+         <Link className="Link" to={`/`}> Logout</Link>
         </button>
       ) : null}
     </header>

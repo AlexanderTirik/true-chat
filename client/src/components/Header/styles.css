@@ -23,3 +23,7 @@
   transition: 0.1s;
   opacity: 0.9;
 }
+.Link {
+  color: var(--font-color);
+  text-decoration: none;
+}

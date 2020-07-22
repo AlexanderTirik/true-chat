@@ -28,42 +28,7 @@ const initialState: IState = {
 
 export default function (state = initialState, action: IAction) {
   switch (action.type) {
-    case ChatActions.ADD_MESSAGE: {
-      const { data } = action.payload!;
-      const newMessage: IMessage = { ...data };
-      const messages = [...state.messages!];
-      messages.push(newMessage);
-      return { ...state, messages };
-    }
-    case ChatActions.EDIT_MESSAGE: {
-      const { idMessage, data } = action.payload!;
-      const updatedMessages = state.messages!.map((message) => {
-        if (message.id === idMessage) {
-          return {
-            ...message,
-            ...data,
-          };
-        } else {
-          return message;
-        }
-      });
-      return { ...state, messages: updatedMessages };
-    }
-    case ChatActions.DELETE_MESSAGE: {
-      const { idMessage } = action.payload!;
-      const filteredMessages = state.messages!.filter(
-        (message) => message.id !== idMessage
-      );
-      return { ...state, messages: filteredMessages };
-    }
-    case ChatActions.CHANGE_LIKE: {
-      const { idMessage } = action.payload!;
-      const messages = [...state.messages!];
-      let message = messages.find((message) => message.id == idMessage);
-      message!.likes = Math.abs(message!.likes - 1);
-      return { ...state, messages };
-    }
-    case ChatActions.INIT_STORAGE: {
+    case ChatActions.SET_STORAGE: {
       const { messages, participants } = action.payload!;
       return { ...state, messages, participants };
     }

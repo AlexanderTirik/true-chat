@@ -6,6 +6,6 @@ export default interface IMessage {
   avatar?: string;
   editedAt?: Date | string;
   createdAt: Date | string;
-  likes: number;
+  likesId: string[];
   formattedTime?: string;
 }

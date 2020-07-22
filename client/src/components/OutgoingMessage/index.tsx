@@ -2,19 +2,13 @@ import React from "react";
 import "./styles.css";
 import IMessage from "../../types/messageType";
 import { deleteMessage, editMessage } from "../../actions/chatActions";
-import {
-  showModal,
-  setCurrentMessageId,
-} from "../../actions/outgoingMessageActions";
 import { connect } from "react-redux";
-
+import { Link } from "react-router-dom";
 
 interface IProps {
   message: IMessage;
   deleteMessage: Function;
   editMessage: Function;
-  showModal: Function;
-  setCurrentMessageId: Function;
 }
 interface IState {
   isSure: boolean;
@@ -36,23 +30,10 @@ class OutgoingMessage extends React.Component<IProps, IState> {
     this.setState({ isSure: true });
   }
 
-  handleStartEditing() {
-    this.props.setCurrentMessageId(this.props.message.id);
-    this.props.showModal();
-  }
-  
-  // handleEdit(text: string, messageId: string) {
-  //   this.props.editMessage(messageId, { text });
-  //   this.props.hideModal();
-  // }
-  // handleTyping(event: React.FormEvent<HTMLInputElement>) {
-  //   this.setState({ editText: event.currentTarget.value });
-  // }
-  
+
   render() {
     return (
       <div className="outgoingMessage">
-       
         <div className="name">{this.props.message.user}</div>
         <div className="data">
           <div className="text">
@@ -62,10 +43,9 @@ class OutgoingMessage extends React.Component<IProps, IState> {
             <div className="date">{this.props.message.formattedTime}</div>
 
             <button
-              onClick={() => this.handleStartEditing()}
               className="editButton"
             >
-              Edit
+              <Link className="Link" to={`/edit/${this.props.message.id}`}>Edit</Link>
             </button>
             {!this.state.isSure ? (
               <button
@@ -93,12 +73,9 @@ class OutgoingMessage extends React.Component<IProps, IState> {
   }
 }
 
-
 const mapDispatchToProps = {
   deleteMessage,
   editMessage,
-  showModal,
-  setCurrentMessageId,
 };
 
 export default connect(null, mapDispatchToProps)(OutgoingMessage);

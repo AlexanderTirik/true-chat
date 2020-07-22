@@ -26,6 +26,8 @@ class PageService {
       const rsp = await response.json();
       if (rsp.accessToken) {
         localStorage.setItem("token", rsp.accessToken);
+        localStorage.setItem("id", rsp.data.id);
+        localStorage.setItem("role", rsp.data.role);
       }
       return rsp;
     } catch (error) {

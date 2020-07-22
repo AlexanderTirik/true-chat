@@ -1,55 +1,50 @@
-.editModal {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
+.edit {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(128, 128, 128, 0.6);
 }
 
-.modalRoot {
+.editRoot {
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  background-color: white;
   border-radius: 5px;
-  height: 120px;
-  width: 200px;
-  background-color: var(--chat-background);
+  background: none;
 }
 
-.modalHeader {
+.editHeader {
   margin: 10px;
   display: flex;
   flex-direction: row;
 }
 
-.closeModalButton {
+.closeEditButton {
   background: none;
   border: none;
   margin-left: auto;
   cursor: pointer;
 }
-.modalBody {
+.editBody {
   margin: 10px;
 }
-.modalFooter {
+.editFooter {
   margin: 10px;
   margin-top: auto;
   margin-left: auto;
 }
 
-.modalEditButton {
+.editButtonSubmit {
   padding: 4px;
   border-radius: 5px;
   background-color: var(--chat-background);
   border: 1px solid var(--border-color);
   cursor: pointer;
 }
-.modalEditButton:hover {
+.editButtonSubmit:hover {
   background-color: var(--block-background);
   transition: 0.1s;
+}
+.Link {
+  color: var(--font-color);
+  text-decoration: none;
 }
