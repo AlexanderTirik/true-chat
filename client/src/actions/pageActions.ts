@@ -21,3 +21,9 @@ export const setCurrentId = (id: string) => ({
     id,
   },
 });
+export const setUserRole = (role: string) => ({
+  type: PageActions.SET_USER_ROLE,
+  payload: {
+    role,
+  },
+});

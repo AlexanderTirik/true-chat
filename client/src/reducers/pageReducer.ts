@@ -10,6 +10,7 @@ interface IAction {
   type: PageActions;
   payload?: {
     id: string;
+    role: string;
   };
 }
 
@@ -35,6 +36,10 @@ export default function (state = initialState, action: IAction) {
     case PageActions.SET_CURRENT_ID: {
       const { id } = action.payload!;
       return { ...state, userId: id };
+    }
+    case PageActions.SET_USER_ROLE: {
+      const { role } = action.payload!;
+      return { ...state, userRole: role };
     }
     default:
       return state;

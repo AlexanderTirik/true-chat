@@ -1,0 +1,5 @@
+export enum UserActions {
+  SET_USER_STORAGE = "SET_USER_STORAGE",
+  EDIT_USER = "EDIT_USER",
+  INIT_STORAGE = "INIT_STORAGE",
+}

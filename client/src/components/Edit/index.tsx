@@ -6,7 +6,7 @@ import { showLoading, hideLoading } from "../../actions/pageActions";
 import { showError } from "../../actions/errorActions";
 import Spinner from "../Spinner";
 import ChatService from "../../services/chatService";
-import { Link } from "react-router-dom";
+import { History } from "history";
 
 interface IState {
   textArea: string;
@@ -14,6 +14,7 @@ interface IState {
 }
 
 interface IProps {
+  history: History;
   editMessage: Function;
   isLoading: boolean;
   hideLoading: Function;
@@ -36,7 +37,6 @@ class Edit extends React.Component<IProps, IState> {
     this.handleTyping = this.handleTyping.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
   }
-
   async componentDidMount() {
     const messageId = this.props.match.params.messageId;
     if (messageId) {
@@ -54,12 +54,16 @@ class Edit extends React.Component<IProps, IState> {
 
   handleEdit() {
     this.props.editMessage(this.state.messageId, this.state.textArea);
+    this.props.history.push("/");
   }
 
   handleTyping(event: React.FormEvent<HTMLInputElement>) {
     this.setState({ textArea: event.currentTarget.value });
   }
 
+  onClose() {
+    this.props.history.push("/");
+  }
   render() {
     if (this.props.isLoading) return <Spinner />;
     return (
@@ -69,8 +73,8 @@ class Edit extends React.Component<IProps, IState> {
             <div>
               <span>Edit Message</span>
             </div>
-            <button className="closeModalButton">
-              <Link className="Link" to={"/"}>x</Link>
+            <button className="closeModalButton" onClick={() => this.onClose()}>
+                x
             </button>
           </div>
           <div className="editBody">
@@ -84,7 +88,8 @@ class Edit extends React.Component<IProps, IState> {
           </div>
           <div className="editFooter">
             <button className="editButtonSubmit" onClick={this.handleEdit}>
-              <Link className="Link" to={"/"}> Edit message</Link>
+                {" "}
+                Edit message{" "}
             </button>
           </div>
         </div>

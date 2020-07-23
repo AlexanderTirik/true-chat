@@ -4,4 +4,5 @@ export enum PageActions {
   LOGIN = "LOGIN",
   LOGOUT = "LOGOUT",
   SET_CURRENT_ID = "SET_CURRENT_ID",
+  SET_USER_ROLE = "SET_USER_ROLE",
 }

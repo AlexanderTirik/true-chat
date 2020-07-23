@@ -44,7 +44,3 @@
   background-color: var(--block-background);
   transition: 0.1s;
 }
-.Link {
-  color: var(--font-color);
-  text-decoration: none;
-}

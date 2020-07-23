@@ -13,6 +13,7 @@ class PageService {
     accessToken?: string;
     data?: {
       id: string;
+      role: string;
     };
     statusCode: number;
     message?: string;

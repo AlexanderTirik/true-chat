@@ -8,8 +8,10 @@ import SendMessageInput from "../SendMessageInput";
 import { initStorage, addMessage } from "../../actions/chatActions";
 import { hideLoading, showLoading } from "../../actions/pageActions";
 import { connect } from "react-redux";
+import { History } from "history";
 
 interface IProps {
+  history: History;
   messages?: IMessage[];
   participants?: number;
   chatName: string;
@@ -28,20 +30,25 @@ class Chat extends React.Component<IProps> {
   render() {
     if (this.props.isLoading) return <Spinner />;
     let lastMessage: string | undefined = "";
-    if (this.props.messages!.length > 0) {
+    let messagesNumber = 0;
+    if (this.props.messages && this.props.messages!.length > 0) {
       lastMessage = this.props.messages![this.props.messages!.length - 1]
         .formattedTime;
+      messagesNumber = this.props.messages!.length;
     }
     return (
       <div className="chat">
         <ChatHeader
           chatName={this.props.chatName}
           participants={this.props.participants!}
-          messagesNumber={this.props.messages!.length}
+          messagesNumber={messagesNumber}
           lastMessage={lastMessage}
         />
-        <MessageList messages={this.props.messages!} />
-        <SendMessageInput />
+        <MessageList
+          messages={this.props.messages!}
+          history={this.props.history}
+        />
+        <SendMessageInput history={this.props.history}/>
       </div>
     );
   }

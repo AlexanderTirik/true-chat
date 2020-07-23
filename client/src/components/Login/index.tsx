@@ -3,13 +3,16 @@ import "./styles.css";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import PageService from "../../services/pageService";
 import { connect } from "react-redux";
-import { login, setCurrentId } from "../../actions/pageActions";
+import { login, setCurrentId, setUserRole } from "../../actions/pageActions";
+import { History } from "history";
 
 interface IState {}
 
 interface IProps {
   login: Function;
   setCurrentId: Function;
+  setUserRole: Function;
+  history: History;
 }
 
 interface FormValues {
@@ -36,6 +39,9 @@ class Login extends React.Component<IProps, IState> {
             } else {
               this.props.login();
               this.props.setCurrentId(response.data!.id);
+              this.props.setUserRole(response.data!.role);
+              if (response.data!.role == "admin")
+                this.props.history.push("/userList");
             }
           }}
         >
@@ -78,5 +84,6 @@ class Login extends React.Component<IProps, IState> {
 const mapDispatchToProps = {
   login,
   setCurrentId,
+  setUserRole,
 };
 export default connect(null, mapDispatchToProps)(Login);

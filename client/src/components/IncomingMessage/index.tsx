@@ -40,7 +40,7 @@ class IncomingMessage extends React.Component<IProps, IState> {
       <div className="incomingMessage">
         <div className="avatarBlock">
           <img
-            className="avatar"
+            className="incomingMessageAvatar"
             src={this.props.message.avatar}
             alt="avatar"
           />

@@ -3,13 +3,14 @@ import "./styles.css";
 import { addMessage } from "../../actions/chatActions";
 import { connect } from "react-redux";
 import IMessage from "../../types/messageType";
-import ChatService from "../../services/chatService";
+import { History } from "history";
 
 interface IState {
   typeMessage: string;
 }
 
 interface IProps {
+  history: History;
   messages: IMessage[];
   addMessage: Function;
   userId: string;
@@ -26,11 +27,6 @@ class SendMessageInput extends React.Component<IProps, IState> {
   }
 
   onSend() {
-    // const response = ChatService.sendMessage(
-    //   this.state.typeMessage,
-    //   this.props.userId
-    // );
-    
     this.props.addMessage({
       text: this.state.typeMessage,
       userId: this.props.userId,
@@ -39,9 +35,8 @@ class SendMessageInput extends React.Component<IProps, IState> {
   handleKeyDown(event: React.KeyboardEvent) {
     if (event.keyCode === 38) {
       const lastMessage = this.props.messages[this.props.messages.length - 1];
-      if (lastMessage.userId === "0") {
-        // this.props.setCurrentMessageId(lastMessage.id);
-        // this.props.showModal();
+      if (lastMessage.userId === this.props.userId) {
+        this.props.history.push(`/edit/${lastMessage.id}`);
       }
     }
   }

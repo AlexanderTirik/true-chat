@@ -1,0 +1,36 @@
+.user {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 0 4px 2px var(--shadow-color);
+  padding: 5px;
+  border-radius: 10px;
+  margin: 10px;
+}
+.userAvatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  box-shadow: 0 0 4px 2px var(--shadow-color);
+  margin: 7px 3px;
+}
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  margin: 7px;
+}
+.userInfoSpan{
+  margin: 2px;
+}
+.userInfoEdit{
+  margin: 2px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  background-color: var(--chat-background);
+  cursor: pointer;
+}
+.userInfoEdit:hover{
+  box-shadow: 0 0 4px 2px var(--shadow-color);
+  background-color: var(--block-background);
+  transition: 0.1s;
+}

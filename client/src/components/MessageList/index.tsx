@@ -7,11 +7,13 @@ import IncomingMessage from "../IncomingMessage";
 import OutgoingMessage from "../OutgoingMessage";
 import DateLine from "../DateLine";
 import { connect } from "react-redux";
-import {animateScroll } from "react-scroll";
+import { animateScroll } from "react-scroll";
+import { History } from "history";
 
 interface IState {}
 
 interface IProps {
+  history: History;
   messages: IMessage[];
   userId: string;
 }
@@ -69,7 +71,11 @@ class MessageList extends React.Component<IProps, IState> {
   getMessageComponent(message: IMessage, index: number) {
     if (message.userId === this.props.userId) {
       return (
-        <OutgoingMessage message={message} key={message.id + Math.random()} />
+        <OutgoingMessage
+          message={message}
+          key={message.id + Math.random()}
+          history={this.props.history}
+        />
       );
     } else {
       return (
@@ -78,14 +84,16 @@ class MessageList extends React.Component<IProps, IState> {
     }
   }
 
-  componentDidMount(){
-    animateScroll.scrollToBottom({containerId:"messageList", duration:0})
+  componentDidMount() {
+    animateScroll.scrollToBottom({ containerId: "messageList", duration: 0 });
   }
 
   render() {
     return (
       <div className="messageList" id="messageList">
-        {this.props.messages.length > 0 ? this.generateMessageLine() : null}
+        {this.props.messages && this.props.messages.length > 0
+          ? this.generateMessageLine()
+          : null}
       </div>
     );
   }

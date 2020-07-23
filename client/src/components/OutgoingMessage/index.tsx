@@ -3,9 +3,10 @@ import "./styles.css";
 import IMessage from "../../types/messageType";
 import { deleteMessage, editMessage } from "../../actions/chatActions";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { History } from "history";
 
 interface IProps {
+  history: History;
   message: IMessage;
   deleteMessage: Function;
   editMessage: Function;
@@ -20,6 +21,7 @@ class OutgoingMessage extends React.Component<IProps, IState> {
     this.state = {
       isSure: false,
     };
+    this.onEdit = this.onEdit.bind(this);
   }
 
   handleDelete() {
@@ -29,9 +31,12 @@ class OutgoingMessage extends React.Component<IProps, IState> {
   handleSure() {
     this.setState({ isSure: true });
   }
-
+  onEdit() {
+    this.props.history.push(`/edit/${this.props.message.id}`);
+  }
 
   render() {
+    const isEdited = this.props.message.editedAt ? 1 : 0;
     return (
       <div className="outgoingMessage">
         <div className="name">{this.props.message.user}</div>
@@ -42,11 +47,10 @@ class OutgoingMessage extends React.Component<IProps, IState> {
           <div className="info">
             <div className="date">{this.props.message.formattedTime}</div>
 
-            <button
-              className="editButton"
-            >
-              <Link className="Link" to={`/edit/${this.props.message.id}`}>Edit</Link>
+            <button className="editButton" onClick={this.onEdit}>
+              Edit
             </button>
+
             {!this.state.isSure ? (
               <button
                 onClick={() => this.handleSure()}
@@ -63,9 +67,7 @@ class OutgoingMessage extends React.Component<IProps, IState> {
                 Sure?
               </button>
             ) : null}
-            {/* {this.props.isEdited ? (
-              <span className="editedSpan">edited</span>
-            ) : null} */}
+            {isEdited ? <span className="editedSpan">edited</span> : null}
           </div>
         </div>
       </div>

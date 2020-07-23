@@ -2,7 +2,7 @@ import React from "react";
 import "./styles.css";
 import { connect } from "react-redux";
 import { logout } from "../../actions/pageActions";
-import {Link} from "react-router-dom"
+import { useHistory } from "react-router";
 
 interface IState {}
 
@@ -12,16 +12,18 @@ interface IProps {
 }
 
 function Header({ isLogged, logout }: IProps) {
+  const history = useHistory();
   const onLogout = () => {
     logout();
-    localStorage.clear()
+    localStorage.clear();
+    history.push("/");
   };
   return (
     <header className="pageHeader">
       <span className="pageHeaderName"> green react chat</span>
       {isLogged ? (
         <button className="pageHeaderLogout" onClick={onLogout}>
-         <Link className="Link" to={`/`}> Logout</Link>
+          Logout
         </button>
       ) : null}
     </header>
