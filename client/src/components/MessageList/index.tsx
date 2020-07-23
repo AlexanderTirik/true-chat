@@ -10,15 +10,13 @@ import { connect } from "react-redux";
 import { animateScroll } from "react-scroll";
 import { History } from "history";
 
-interface IState {}
-
 interface IProps {
   history: History;
   messages: IMessage[];
   userId: string;
 }
 
-class MessageList extends React.Component<IProps, IState> {
+class MessageList extends React.Component<IProps> {
   getFormatDate(dateStr: string | Date) {
     const date = new Date(dateStr);
     if (this.isToday(date)) return "Today";

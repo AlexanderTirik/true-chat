@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./styles.css";
 import IMessage from "../../types/messageType";
 import Spinner from "../Spinner";
 import ChatHeader from "../ChatHeader";
 import MessageList from "../MessageList";
 import SendMessageInput from "../SendMessageInput";
-import { initStorage, addMessage } from "../../actions/chatActions";
-import { hideLoading, showLoading } from "../../actions/pageActions";
+import { initStorage } from "../../actions/chatActions";
 import { connect } from "react-redux";
 import { History } from "history";
 
@@ -16,42 +15,41 @@ interface IProps {
   participants?: number;
   chatName: string;
   initStorage: Function;
-  hideLoading: Function;
-  showLoading: Function;
-  addMessage: Function;
+
   isLoading: boolean;
 }
 
-class Chat extends React.Component<IProps> {
-  componentDidMount() {
-    this.props.initStorage();
-  }
+function Chat({
+  history,
+  messages,
+  participants,
+  chatName,
+  initStorage,
+  isLoading,
+}: IProps) {
+  useEffect(() => {
+    initStorage();
+  }, []);
 
-  render() {
-    if (this.props.isLoading) return <Spinner />;
-    let lastMessage: string | undefined = "";
-    let messagesNumber = 0;
-    if (this.props.messages && this.props.messages!.length > 0) {
-      lastMessage = this.props.messages![this.props.messages!.length - 1]
-        .formattedTime;
-      messagesNumber = this.props.messages!.length;
-    }
-    return (
-      <div className="chat">
-        <ChatHeader
-          chatName={this.props.chatName}
-          participants={this.props.participants!}
-          messagesNumber={messagesNumber}
-          lastMessage={lastMessage}
-        />
-        <MessageList
-          messages={this.props.messages!}
-          history={this.props.history}
-        />
-        <SendMessageInput history={this.props.history}/>
-      </div>
-    );
+  if (isLoading) return <Spinner />;
+  let lastMessage: string | undefined = "";
+  let messagesNumber = 0;
+  if (messages && messages!.length > 0) {
+    lastMessage = messages![messages!.length - 1].formattedTime;
+    messagesNumber = messages!.length;
   }
+  return (
+    <div className="chat">
+      <ChatHeader
+        chatName={chatName}
+        participants={participants!}
+        messagesNumber={messagesNumber}
+        lastMessage={lastMessage}
+      />
+      <MessageList messages={messages!} history={history} />
+      <SendMessageInput history={history} />
+    </div>
+  );
 }
 
 interface IStoreState {
@@ -75,9 +73,6 @@ const mapStateToProps = (state: IStoreState) => {
 };
 const mapDispatchToProps = {
   initStorage,
-  hideLoading,
-  showLoading,
-  addMessage,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

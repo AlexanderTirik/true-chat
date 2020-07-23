@@ -22,6 +22,7 @@ interface IProps {
   editUser: Function;
   initStorage: Function;
 }
+
 function UserEdit({
   match,
   isLoading,
